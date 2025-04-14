@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f9fafb;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 600px;
+        margin: 30px auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+      .header {
+        background-color: #111827;
+        color: #ffffff;
+        padding: 20px;
+        text-align: center;
+        font-size: 24px;
+      }
+      .content {
+        padding: 30px 20px;
+        color: #333333;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      .otp-box {
+        background-color: #f3f4f6;
+        border: 2px dashed #2563eb;
+        padding: 20px;
+        margin: 20px 0;
+        font-size: 24px;
+        text-align: center;
+        font-weight: bold;
+        letter-spacing: 4px;
+        color: #111827;
+      }
+      .footer {
+        text-align: center;
+        font-size: 12px;
+        color: #888888;
+        padding: 15px;
+        background-color: #f1f5f9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">Your Movie Info App OTP</div>
+      <div class="content">
+        <p>Hi <strong><%=username%></strong>,</p>
+
+        <p>
+          Thank you for using our Movie Info App. To proceed with your
+          login/verification, please use the OTP below:
+        </p>
+
+        <div class="otp-box"><%= otp%></div>
+
+        <p>
+          This OTP is valid for the next 10 minutes. Please do not share it with
+          anyone.
+        </p>
+
+        <p>Cheers,<br />The Movie Info App Team</p>
+      </div>
+      <div class="footer">&copy; 2025 Movie Info App. All rights reserved.</div>
+    </div>
+  </body>
+</html>
