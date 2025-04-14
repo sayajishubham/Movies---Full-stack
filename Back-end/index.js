@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const authRoutes = require("./Routes/Authentication .route");
 const connectToDb = require("./config/server");
 const movieRoutes = require("./Routes/movies.route");
+require("dotenv").config()
 
 
 const app = express();
@@ -17,7 +18,10 @@ app.set("view engine", "ejs");
 app.use('/auth', authRoutes);
 app.use('/movies', movieRoutes);
 
-app.listen(8080, async () => {
+
+const PORT = process.env.PORT
+
+app.listen(PORT, async () => {
     try {
         await connectToDb
         console.log("<<<<< Db connected >>>>>");

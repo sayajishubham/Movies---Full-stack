@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken")
 const nodeMailer = require("nodemailer");
 const userModel = require("../model/user.model");
 const bcrypt = require("bcrypt")
+require("dotenv").config()
+
 const sendmail = async (toSend, html) => {
     const transporter = nodeMailer.createTransport({
         service: "Gmail",
@@ -9,12 +11,12 @@ const sendmail = async (toSend, html) => {
         secure: false,
         auth: {
             user: "grid7698@gmail.com",
-            pass: "zszcyqpqijncfrqd",
+            pass: process.env.EMAIL_pass,
         },
     });
     try {
         const info = await transporter.sendMail({
-            from: 'grid7698@gmail.com',
+            from: "grid7698@gmail.com",
             to: toSend || "shubhamsayaji52@gmail.com",
             subject: "Verification",
             html: html || null
@@ -34,7 +36,7 @@ const generateOTP = () => {
 const OtpCheck = (req, res) => {
     const verifyOtp = req.body.otp
     const token = req.cookies.VerifyToken
-    const decoded = jwt.verify(token, "zkraeeafo")
+    const decoded = jwt.verify(token, process.env.KEY_TOKEN)
     if (verifyOtp === decoded.otp) {
         UserToDb(decoded)
         return res.status(200).json({
@@ -65,4 +67,6 @@ const UserToDb = (obj) => {
     }
 
 }
+
+
 module.exports = { sendmail, OtpCheck, generateOTP }

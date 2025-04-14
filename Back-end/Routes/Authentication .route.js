@@ -4,7 +4,7 @@ const { OtpCheck } = require("../config/auth.config");
 
 
 const authRoutes = express.Router();
-authRoutes.post("/signUp", signUp).post('/verify', OtpCheck).post("/sigin", sigin)
+authRoutes.post("/signUp", signUp).post('/verify', OtpCheck).post("/signin", sigin)
 
 
 module.exports = authRoutes;

@@ -57,12 +57,12 @@ const UpdateMovie = async (req, res) => {
         const updatedMovie = await moviesModel.findByIdAndUpdate(id, data)
         if (updatedMovie === null) {
             res.status(400).json({
-                message: "Movie did not found"
+                message: "no Movie Found"
             })
         }
         res.status(200).json({
             message: "updated SuccessFully",
-            movie: updatedMovie
+            movie: data
         })
     } catch (error) {
         res.status(400).json({
