@@ -1,18 +1,17 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 
 function Signin() {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let navigate = useNavigate();
 
-  async function handlesigninsubmit(e) {
+  function handlesigninsubmit(e) {
     e.preventDefault();
-    try {
-      const res = await axios.post(
-        "http://127.0.0.1:8080/auth/signin",
+    axios
+      .post(
+        `http://localhost:8080/auth/signin`,
         {
           email,
           password,
@@ -20,13 +19,15 @@ function Signin() {
         {
           withCredentials: true,
         }
-      );
-
-      sessionStorage.setItem("userToken", res.data.userToken);
-      navigate("/");
-    } catch (error) {
-      console.log(error.message);
-    }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate("/");
+        sessionStorage.setItem("Userlogin", JSON.stringify(res.data.userToken));
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }
 
   return (

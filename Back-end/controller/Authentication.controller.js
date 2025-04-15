@@ -23,7 +23,11 @@ const signUp = async (req, res) => {
 
         try {
             sendmail(email, html);
-            res.cookie("VerifyToken", token).status(200).json({
+            res.cookie("VerifyToken", token, {
+                httpOnly: false,
+                secure: false,
+                sameSite: "lax"
+            }).status(200).json({
                 message: "Otp is sent",
                 token
             })

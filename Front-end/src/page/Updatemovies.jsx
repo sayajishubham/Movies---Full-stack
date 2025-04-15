@@ -1,38 +1,45 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-function Addmovies() {
-  let [Title, setTitle] = useState("");
-  let [Genre, setGenre] = useState("");
-  let [Director, setDirector] = useState("");
-  let [Release_Year, setReleaseYear] = useState("");
-  let [Description, setDescription] = useState("");
-  let [Image, setImage] = useState("");
+function Updatemovies() {
+  let location = useLocation();
+  let { Title, Genre, Director, Image, ReleaseYear, Description } =
+    location.state;
+
+  let [UpdateTitle, SetUpdateTitle] = useState(Title);
+  let [UpdateGenre, SetUpdateGenre] = useState(Genre);
+  let [UpdateDirector, SetUpdateDirector] = useState(Director);
+  let [UpdateImage, SetUpdateImage] = useState(Image);
+  let [UpdateReleaseYear, SetUpdateReleaseYear] = useState(ReleaseYear);
+  let [UpdateDescription, SetUpdateDescription] = useState(Description);
+
+  let { id } = useParams();
 
   let navigate = useNavigate();
-
-  function addmoviesdata(e) {
+  function handleUpdatemovies(e) {
     e.preventDefault();
     axios
-      .post(
-        `http://localhost:8080/movies`,
+      .patch(
+        `http://localhost:80808/movies/${id}`,
         {
-          Title,
-          Genre,
-          Director,
-          Release_Year,
-          Description,
-          Image,
+          Title: UpdateTitle,
+          Genre: UpdateGenre,
+          Director: UpdateDirector,
+          Image: UpdateImage,
+          ReleaseYear: UpdateReleaseYear,
+          Description: UpdateDescription,
         },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+        }
       )
       .then((res) => {
         console.log(res);
         navigate("/Allmovies");
       })
       .catch((err) => {
-        console.log(err.message);
+        console.log(err);
       });
   }
 
@@ -46,38 +53,38 @@ function Addmovies() {
         </div>
         <div>
           <h2 className="text-[23px] text-white text-center pb-[2px]">
-            Add New Movie
+            Update Movie
           </h2>
           <h4 className="text-[16px] text-center pb-[10px] text-[#c0c8d2]">
             Fill the details below
           </h4>
         </div>
         <div className="w-full">
-          <form onSubmit={addmoviesdata}>
+          <form onSubmit={handleUpdatemovies}>
             <label htmlFor="Title" className="text-[16px] text-white">
               Title <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               placeholder="Movie Title"
-              name="Title"
-              value={Title}
+              name="UpdateTitle"
+              value={UpdateTitle}
               onChange={(e) => {
-                setTitle(e.target.value);
+                SetUpdateTitle(e.target.value);
               }}
               className="w-full mt-1 bg-[#f3f6fd] h-[46px] border border-[#DCDDDF] text-[#333] rounded-sm outline-none p-3 mb-[10px]"
               required
             />
-            <label htmlFor="Title" className="text-[16px] text-white">
+            <label htmlFor="Image" className="text-[16px] text-white">
               Image Url <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              placeholder="Movie Title"
-              name="Image"
-              value={Image}
+              placeholder="Image URL"
+              name="UpdateImage"
+              value={UpdateImage}
               onChange={(e) => {
-                setImage(e.target.value);
+                SetUpdateImage(e.target.value);
               }}
               className="w-full mt-1 bg-[#f3f6fd] h-[46px] border border-[#DCDDDF] text-[#333] rounded-sm outline-none p-3 mb-[10px]"
               required
@@ -88,10 +95,10 @@ function Addmovies() {
             <input
               type="text"
               placeholder="Action, Comedy, Drama..."
-              name="Genre"
-              value={Genre}
+              name="UpdateGenre"
+              value={UpdateGenre}
               onChange={(e) => {
-                setGenre(e.target.value);
+                SetUpdateGenre(e.target.value);
               }}
               className="w-full mt-1 bg-[#f3f6fd] h-[46px] border border-[#DCDDDF] text-[#333] rounded-sm outline-none p-3 mb-[10px]"
               required
@@ -102,10 +109,10 @@ function Addmovies() {
             <input
               type="text"
               placeholder="Director Name"
-              name="Director"
-              value={Director}
+              name="UpdateDirector"
+              value={UpdateDirector}
               onChange={(e) => {
-                setDirector(e.target.value);
+                SetUpdateDirector(e.target.value);
               }}
               className="w-full mt-1 bg-[#f3f6fd] h-[46px] border border-[#DCDDDF] text-[#333] rounded-sm outline-none p-3 mb-[10px]"
               required
@@ -116,10 +123,10 @@ function Addmovies() {
             <input
               type="number"
               placeholder="2024"
-              name="ReleaseYear"
-              value={Release_Year}
+              name="UpdateReleaseYear"
+              value={UpdateReleaseYear}
               onChange={(e) => {
-                setReleaseYear(e.target.value);
+                SetUpdateReleaseYear(e.target.value);
               }}
               className="w-full mt-1 bg-[#f3f6fd] h-[46px] border border-[#DCDDDF] text-[#333] rounded-sm outline-none p-3 mb-[10px]"
               required
@@ -129,10 +136,10 @@ function Addmovies() {
             </label>
             <textarea
               placeholder="Short description about the movie..."
-              name="Description"
-              value={Description}
+              name="UpdateDescription"
+              value={UpdateDescription}
               onChange={(e) => {
-                setDescription(e.target.value);
+                SetUpdateDescription(e.target.value);
               }}
               className="w-full mt-1 bg-[#f3f6fd] min-h-[80px] border border-[#DCDDDF] text-[#333] rounded-sm outline-none p-3 mb-[15px]"
               required
@@ -141,7 +148,7 @@ function Addmovies() {
               type="submit"
               className="block mx-auto px-[20px] py-[12px] bg-[#1F1C2F] text-white rounded-sm text-[16px] cursor-pointer hover:bg-[#29263e] transition-all"
             >
-              Add Movie
+              Update Movie
             </button>
           </form>
         </div>
@@ -150,4 +157,4 @@ function Addmovies() {
   );
 }
 
-export default Addmovies;
+export default Updatemovies;

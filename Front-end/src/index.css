@@ -4,7 +4,9 @@
 @custom-variant dark (&:is(.dark *));
 
 body {
-  background-color: #212529;
+  background: linear-gradient(90deg, #0f0c29, #302b63, #24243e);
+  min-height: 100vh;
+  margin: 0;
 }
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -112,6 +114,7 @@ body {
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
+
 
 @layer base {
   * {

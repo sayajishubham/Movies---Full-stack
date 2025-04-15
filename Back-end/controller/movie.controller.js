@@ -39,14 +39,15 @@ const AddMovies = async (req, res) => {
 
 const DeleteMovie = async (req, res) => {
     const id = (req.params.id)
+    console.log(id)
     try {
-        await moviesModel.findByIdAndDelete(id)
+        await moviesModel.findByIdAndDelete({ _id: id })
         res.status(200).json({
             message: "Deleted SuccessFull"
         })
     } catch (error) {
         res.status(400).json({
-            message: error
+            message: error.message
         })
     }
 }

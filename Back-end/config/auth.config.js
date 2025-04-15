@@ -36,6 +36,7 @@ const generateOTP = () => {
 const OtpCheck = (req, res) => {
     const verifyOtp = req.body.otp
     const token = req.cookies.VerifyToken
+    console.log(token)
     const decoded = jwt.verify(token, process.env.KEY_TOKEN)
     if (verifyOtp === decoded.otp) {
         UserToDb(decoded)
