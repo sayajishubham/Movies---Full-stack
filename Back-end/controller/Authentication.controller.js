@@ -37,7 +37,7 @@ const signUp = async (req, res) => {
 
 
 const sigin = async (req, res) => {
-    const { username, email, password, role } = (req.body)
+    const { email, password } = (req.body)
     if (!email || !password) {
         return res.status(400).json({
             message: "Please fil all the Field"
@@ -46,21 +46,27 @@ const sigin = async (req, res) => {
     try {
         const user = await userModel.findOne({ email })
         if (!user) {
-            res.status(404).json({
+            return res.status(404).json({
                 message: "user not Found"
             })
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            res.status(401).json({
+            return res.status(401).json({
                 message: "wrong password"
             })
         }
 
         const userToken = jwt.sign({ user }, process.env.USER_KEY_TOKEN);
-        res.cookie('userToken', userToken).status(200).json({
-            message: "USerFound login Successfull"
+        res.cookie('userToken', userToken, {
+            httpOnly: false,
+            sameSite: 'none',
+            secure: false,
+
+        }).status(200).json({
+            message: "USerFound login Successfull",
+            userToken
         })
     } catch (error) {
         console.log(error)

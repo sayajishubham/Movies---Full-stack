@@ -39,6 +39,7 @@ const OtpCheck = (req, res) => {
     const decoded = jwt.verify(token, process.env.KEY_TOKEN)
     if (verifyOtp === decoded.otp) {
         UserToDb(decoded)
+
         return res.status(200).json({
             result: "Verified",
             access: "allowed"
